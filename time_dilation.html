@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="一些自己写的简单在线工具">
+    <meta name="author" content="Werner">
+    <title>时间膨胀计算器</title>
+    <style>
+		input{
+			width: 150px;
+		}
+    </style>
+</head>
+
+<body>
+
+<h1>时间膨胀计算器</h1>
+<p>相对论效应导致的时间膨胀计算器。注意：能输入小数；计算有精度限制。</p>
+
+<ul>
+	<li>飞船相对惯性参考系以光速的 <input id="uniform-velocity-input" value="50" type="number" min="0" max="100">% 运动，则飞船时间要慢 <span id="uniform-velocity-output"></span> 倍</li>
+	<li>飞船相对惯性参考系从速度为 0 开始，以恒定加速度 <input id="constant-acceleration-input1" value="1000" type="number"> m/s<sup>2</sup> 累计加速 <input id="constant-acceleration-input2" value="1000" type="number"> s，则飞船上时间过去了 <span id="constant-acceleration-output1"></span> s，是惯性参考系时间的 <span id="constant-acceleration-output2"></span>%，加速后速度为光速的 <span id="constant-acceleration-output3"></span>%</li>
+</ul>
+
+<script>
+
+var c = 299792458;
+
+// 第一种情况：狭义相对论，匀速运动
+var uniform_velocity_percentage = document.getElementById("uniform-velocity-input").value;
+function calculate_uniform_velocity_problem() {
+	var time = "∞";
+	var p = uniform_velocity_percentage;
+	if (p >= 0 && p < 100) {
+		time = (1/Math.sqrt(1-Math.pow(p/100, 2))).toFixed(5);
+	}
+	document.getElementById("uniform-velocity-output").innerText = time;
+}
+calculate_uniform_velocity_problem();
+document.getElementById('uniform-velocity-input').addEventListener('input',()=>{
+	uniform_velocity_percentage = document.getElementById("uniform-velocity-input").value;
+	calculate_uniform_velocity_problem();
+})
+
+// 第二种情况：狭义相对论，匀加速运动
+// 计算方法来自 https://qr.ae/prOabw
+var constant_acceleration_acceleration = document.getElementById("constant-acceleration-input1").value;
+var constant_acceleration_duration = document.getElementById("constant-acceleration-input2").value;
+function calculate_constant_acceleration_problem() {
+	var g = constant_acceleration_acceleration;
+	var t = constant_acceleration_duration;
+	var result = c/g*Math.asinh(g*t/c);
+	if (g*t > c) {
+		// 禁止超光速。
+		// 为何这里有可能超光速？因为假定了加速度恒定。
+		// 但其实随着速度变大，飞船质量会变大，维持恒定加速度需要的力也会变大。
+		// 当速度趋于光速时维持恒定加速度需要的力将趋于无穷大，飞船引擎不可能输出无穷大的推力。
+		// 因此维持恒定加速度是不可能的。
+		document.getElementById("constant-acceleration-output1").innerText = "-";
+		document.getElementById("constant-acceleration-output2").innerText = "-";
+		document.getElementById("constant-acceleration-output3").innerText = "-";
+		return;
+	}
+	document.getElementById("constant-acceleration-output1").innerText = result;
+	document.getElementById("constant-acceleration-output2").innerText = (result/t*100).toFixed(5);
+	document.getElementById("constant-acceleration-output3").innerText = (g*t/c*100).toFixed(5);
+}
+calculate_constant_acceleration_problem();
+document.getElementById('constant-acceleration-input1').addEventListener('input',()=>{
+	constant_acceleration_acceleration = document.getElementById("constant-acceleration-input1").value;
+	calculate_constant_acceleration_problem();
+})
+document.getElementById('constant-acceleration-input2').addEventListener('input',()=>{
+	constant_acceleration_duration = document.getElementById("constant-acceleration-input2").value;
+	calculate_constant_acceleration_problem();
+})
+</script>
+
+</body>
+
+</html>
