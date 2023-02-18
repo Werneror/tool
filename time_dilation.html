@@ -16,6 +16,9 @@
 			font-size: 28px;
 			font-weight: 300;
 		}
+		.site-title{
+			margin-top: 30px;
+		}
 		input{
 			width: 150px;
 		}
@@ -38,11 +41,11 @@
 	<h1 class="site-h1">时间膨胀计算器</h1>
 	<blockquote class="layui-elem-quote layui-quote-nm">计算相对论效应导致的时间膨胀。支持输入小数；计算有一定的精度限制。</blockquote>
 	<fieldset class="layui-elem-field layui-field-title site-title">
-		<legend>匀速运动</legend>
+		<legend style="font-size: 24px;">匀速运动</legend>
 	</fieldset>
 	<p>飞船相对惯性参考系以光速的 <input id="uniform-velocity-input" value="50" type="number" min="0" max="100">% 做匀速运动，则飞船时间要慢 <span id="uniform-velocity-output" class="output"></span> 倍。</p>
 	<fieldset class="layui-elem-field layui-field-title site-title">
-		<legend>匀加速运动</legend>
+		<legend style="font-size: 24px;">匀加速运动</legend>
 	</fieldset>
 	<p>飞船相对惯性参考系从速度为 0 开始，以恒定加速度 <input id="constant-acceleration-input1" value="1000" type="number"> m/s<sup>2</sup> 累计加速 <input id="constant-acceleration-input2" value="1000" type="number"> s，则飞船上时间过去了 <span id="constant-acceleration-output1" class="output"></span> s，是惯性参考系时间的 <span id="constant-acceleration-output2" class="output"></span>%，加速后速度为光速的 <span id="constant-acceleration-output3" class="output"></span>%。</p>
 	<p style="margin-top: 10px;">说明：</p>
