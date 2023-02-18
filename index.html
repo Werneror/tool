@@ -4,20 +4,45 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="一些自己写的简单在线工具">
+    <meta name="description" content="一些自写自用的简单工具">
     <meta name="author" content="Werner">
     <title>工具</title>
+	<link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
+    <style>
+		.site-h1{
+			margin-top: 10px;
+			margin-bottom: 20px;
+			color: #393D49;
+			font-size: 28px;
+			font-weight: 300;
+		}
+    </style>
 </head>
 
-<body>
+<body class="layui-bg-gray">
 
-<h1>工具</h1>
-<p>一些自己写的简单在线工具</p>
+<div class="layui-bg-gray layui-container">
+	<h1 class="site-h1">工具</h1>
 
-<ul>
-	<li><a href="oneline.html">一行化</a></li>
-	<li><a href="time_dilation.html">时间膨胀计算器</a></li>
-</ul>
+	<blockquote class="layui-elem-quote layui-quote-nm">一些自写自用的简单工具。</blockquote>
+
+	<div class="layui-row layui-col-space15">
+	  <div class="layui-col-md2 layui-col-sm4 layui-col-xs6">
+		<div class="layui-panel">
+		  <div style="padding: 30px; font-size: 16px;">
+			<a href="oneline.html">一行化</a>
+		  </div>
+		</div>   
+	  </div>
+	  <div class="layui-col-md2 layui-col-sm4 layui-col-xs6">
+		<div class="layui-panel">
+		  <div style="padding: 30px; font-size: 16px;">
+			<a href="time_dilation.html">时间膨胀计算器</a>
+		  </div>
+		</div>   
+	  </div>
+	</div>
+</div>
 
 </body>
 

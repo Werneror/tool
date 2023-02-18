@@ -4,19 +4,32 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="一些自己写的简单在线工具">
+    <meta name="description" content="一些自写自用的简单工具">
     <meta name="author" content="Werner">
     <title>一行化</title>
+	<link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
+    <style>
+		.site-h1{
+			margin-top: 10px;
+			margin-bottom: 20px;
+			color: #393D49;
+			font-size: 28px;
+			font-weight: 300;
+		}
+    </style>
 </head>
 
-<body>
+<body class="layui-bg-gray">
 
-<h1>一行化</h1>
-<p>有些英文文档会遵循每行不超过 80 字符的规范，若超过 80 字符，会折行。本工具用于取消这种这行，以方便机器翻译。</p>
+<div class="layui-bg-gray layui-container">
+	<h1 class="site-h1">一行化</h1>
 
-<textarea id="text" rows="30" cols="180"></textarea>
-<br/>
-<button id="do">处理</button>
+	<blockquote class="layui-elem-quote layui-quote-nm">有些英文文档会遵循每行不超过 80 字符的规范，若超过 80 字符会折行。本工具用于取消这种折行，以方便机器翻译。</blockquote>
+
+	<textarea id="text" rows="20" class="layui-textarea" style="font-size: 16px;"></textarea>
+
+	<button id="do" class="layui-btn layui-btn-primary" style="margin-top: 10px;">处理</button>
+</div>
 
 <script>
 

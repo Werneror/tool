@@ -4,31 +4,57 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="一些自己写的简单在线工具">
+    <meta name="description" content="计算相对论效应导致的时间膨胀。">
     <meta name="author" content="Werner">
     <title>时间膨胀计算器</title>
+	<link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
     <style>
+		.site-h1{
+			margin-top: 10px;
+			margin-bottom: 20px;
+			color: #393D49;
+			font-size: 28px;
+			font-weight: 300;
+		}
 		input{
 			width: 150px;
+		}
+		p{
+			font-size: 16px;
+			line-height: 1.6;
+		}
+		.output{
+			color: black;
 		}
     </style>
 </head>
 
 <body>
 
-<h1>时间膨胀计算器</h1>
-<p>相对论效应导致的时间膨胀计算器。注意：能输入小数；计算有精度限制。</p>
+<body class="layui-bg-gray">
 
-<ul>
-	<li>飞船相对惯性参考系以光速的 <input id="uniform-velocity-input" value="50" type="number" min="0" max="100">% 运动，则飞船时间要慢 <span id="uniform-velocity-output"></span> 倍</li>
-	<li>飞船相对惯性参考系从速度为 0 开始，以恒定加速度 <input id="constant-acceleration-input1" value="1000" type="number"> m/s<sup>2</sup> 累计加速 <input id="constant-acceleration-input2" value="1000" type="number"> s，则飞船上时间过去了 <span id="constant-acceleration-output1"></span> s，是惯性参考系时间的 <span id="constant-acceleration-output2"></span>%，加速后速度为光速的 <span id="constant-acceleration-output3"></span>%</li>
-</ul>
+<div class="layui-bg-gray layui-container">
+
+	<h1 class="site-h1">时间膨胀计算器</h1>
+	<blockquote class="layui-elem-quote layui-quote-nm">计算相对论效应导致的时间膨胀。支持输入小数；计算有一定的精度限制。</blockquote>
+	<fieldset class="layui-elem-field layui-field-title site-title">
+		<legend>匀速运动</legend>
+	</fieldset>
+	<p>飞船相对惯性参考系以光速的 <input id="uniform-velocity-input" value="50" type="number" min="0" max="100">% 做匀速运动，则飞船时间要慢 <span id="uniform-velocity-output" class="output"></span> 倍。</p>
+	<fieldset class="layui-elem-field layui-field-title site-title">
+		<legend>匀加速运动</legend>
+	</fieldset>
+	<p>飞船相对惯性参考系从速度为 0 开始，以恒定加速度 <input id="constant-acceleration-input1" value="1000" type="number"> m/s<sup>2</sup> 累计加速 <input id="constant-acceleration-input2" value="1000" type="number"> s，则飞船上时间过去了 <span id="constant-acceleration-output1" class="output"></span> s，是惯性参考系时间的 <span id="constant-acceleration-output2" class="output"></span>%，加速后速度为光速的 <span id="constant-acceleration-output3" class="output"></span>%。</p>
+	<p style="margin-top: 10px;">说明：</p>
+	<p style="margin-top: 10px;">1. 计算方法来自《<a href="https://qr.ae/prOabw" target="_blank">How do I calculate time dilation of an accelerating object?</a>》。</p>
+	<p style="margin-top: 10px;">2. 根据等效原理，加速度等效于重力场；根据广义相对论，重力场会改变时间流速；那么加速度本身（不是加速度产生的速度）会改变时间流速吗？答案是：不会。详情见《<a href="https://math.ucr.edu/home/baez/physics/Relativity/SR/clock.html" target="_blank">Does a clock's acceleration affect its timing rate?</a>》。
+</div>
 
 <script>
 
 var c = 299792458;
 
-// 第一种情况：狭义相对论，匀速运动
+// 匀速运动
 var uniform_velocity_percentage = document.getElementById("uniform-velocity-input").value;
 function calculate_uniform_velocity_problem() {
 	var time = "∞";
@@ -44,8 +70,7 @@ document.getElementById('uniform-velocity-input').addEventListener('input',()=>{
 	calculate_uniform_velocity_problem();
 })
 
-// 第二种情况：狭义相对论，匀加速运动
-// 计算方法来自 https://qr.ae/prOabw
+// 匀加速运动
 var constant_acceleration_acceleration = document.getElementById("constant-acceleration-input1").value;
 var constant_acceleration_duration = document.getElementById("constant-acceleration-input2").value;
 function calculate_constant_acceleration_problem() {
