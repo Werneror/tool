@@ -7,28 +7,28 @@
     <meta name="description" content="生成符合特定条件的名字。">
     <meta name="author" content="Werner">
     <title>名字生成器</title>
-	<link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
+    <link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
     <style>
-		.site-h1{
-			margin-top: 10px;
-			margin-bottom: 20px;
-			color: #393D49;
-			font-size: 28px;
-			font-weight: 300;
-		}
-		.site-title{
-			margin-top: 30px;
-		}
-		input{
-			width: 150px;
-		}
-		p{
-			font-size: 16px;
-			line-height: 1.6;
-		}
-		.output{
-			color: black;
-		}
+        .site-h1{
+            margin-top: 10px;
+            margin-bottom: 20px;
+            color: #393D49;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .site-title{
+            margin-top: 30px;
+        }
+        input{
+            width: 150px;
+        }
+        p{
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .output{
+            color: black;
+        }
     </style>
 </head>
 
@@ -38,49 +38,77 @@
 
 <div class="layui-bg-gray layui-container">
 
-	<h1 class="site-h1">名字生成器</h1>
-	<blockquote class="layui-elem-quote layui-quote-nm">生成符合特定条件的名字。</blockquote>
+    <h1 class="site-h1">名字生成器</h1>
+    <blockquote class="layui-elem-quote layui-quote-nm">生成符合特定条件的名字。</blockquote>
 
-	<fieldset class="layui-elem-field layui-field-title site-title">
-		<legend style="font-size: 24px;">新中国年代名字生成</legend>
-	</fieldset>
+    <fieldset class="layui-elem-field layui-field-title site-title">
+        <legend style="font-size: 24px;">新中国年代名字生成</legend>
+    </fieldset>
 
-	<form class="layui-form" action="">
-	  <div class="layui-form-item">
-		<label class="layui-form-label">出生年代</label>
-		<div class="layui-input-block">
-		  <select name="era" lay-verify="required">
-			<option value="2021">2021 年</option>
-			<option value="2020">2020 年</option>
-			<option value="2019">2010 ~ 2019 年</option>
-			<option value="2009">2000 ~ 2009 年</option>
-			<option value="1999">1990 ~ 1999 年</option>
-			<option value="1989">1980 ~ 1989 年</option>
-			<option value="1979">1970 ~ 1979 年</option>
-			<option value="1969">1960 ~ 1969 年</option>
-			<option value="1959" selected="selected">1959 年及以前</option>
-		  </select>
-		</div>
-	  </div>
-	  <div class="layui-form-item">
-		<label class="layui-form-label">性别</label>
-		<div class="layui-input-block">
-		  <input type="radio" name="sex" value="male" title="男">
-		  <input type="radio" name="sex" value="female" title="女" checked>
-		</div>
-	  </div>
-	  <div class="layui-form-item">
-		<div class="layui-input-block">
-		  <button class="layui-btn" lay-submit lay-filter="china-era">生成</button>
-		</div>
-	  </div>
-	</form>
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">出生年代</label>
+        <div class="layui-input-block">
+          <select name="era" lay-verify="required">
+            <option value="2021">2021 年</option>
+            <option value="2020">2020 年</option>
+            <option value="2019">2010 ~ 2019 年</option>
+            <option value="2009">2000 ~ 2009 年</option>
+            <option value="1999">1990 ~ 1999 年</option>
+            <option value="1989">1980 ~ 1989 年</option>
+            <option value="1979">1970 ~ 1979 年</option>
+            <option value="1969">1960 ~ 1969 年</option>
+            <option value="1959" selected="selected">1959 年及以前</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+          <input type="radio" name="sex" value="male" title="男">
+          <input type="radio" name="sex" value="female" title="女" checked>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit lay-filter="china-era">生成</button>
+        </div>
+      </div>
+    </form>
 
-	<p id="china-era-result" style="height: 50px; font-size: 20px; color: blank;"></p>
+    <p id="china-era-result" style="height: 50px; font-size: 20px; color: blank;"></p>
 
-	<p style="margin-top: 10px;">数据来源：</p>
-	<p style="margin-top: 10px;">1. 《<a href="http://www.gov.cn/xinwen/2021-02/08/content_5585906.htm" target="_blank"><二〇二〇年全国姓名报告>发布</a>》</p>
-	<p style="margin-top: 10px;">2. 《<a href="https://www.zj.gov.cn/art/2022/1/31/art_1229530745_59664848.html" target="_blank">二〇二一年全国姓名报告</a>》</p>
+    <p style="margin-top: 10px;">数据来源：</p>
+    <p style="margin-top: 10px;">1. 《<a href="http://www.gov.cn/xinwen/2021-02/08/content_5585906.htm" target="_blank"><二〇二〇年全国姓名报告>发布</a>》</p>
+    <p style="margin-top: 10px;">2. 《<a href="https://www.zj.gov.cn/art/2022/1/31/art_1229530745_59664848.html" target="_blank">二〇二一年全国姓名报告</a>》</p>
+
+
+    <fieldset class="layui-elem-field layui-field-title site-title">
+        <legend style="font-size: 24px;">音译风格名字生成<sup>beta</sup></legend>
+    </fieldset>
+
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">字数</label>
+        <div class="layui-input-block">
+            <input type="number" min="1" name="number" value="3" required lay-verify="required" placeholder="请输入字数" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+          <input type="radio" name="sex" value="male" title="男">
+          <input type="radio" name="sex" value="female" title="女" checked>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit lay-filter="transliteration">生成</button>
+        </div>
+      </div>
+    </form>
+
+    <p id="transliteration-result" style="height: 50px; font-size: 20px; color: blank;"></p>
 </div>
 
 <script src="https://unpkg.com/layui@2.6.8/dist/layui.js"></script>
@@ -88,60 +116,509 @@
 
 // 最好是列表中越靠前的元素选中的概率越大，但实现起来比较麻烦，就先这样吧
 function random_select(array){
-	return array[Math.floor(Math.random() * array.length)];
+    return array[Math.floor(Math.random() * array.length)];
 };
 
 layui.use('form', function(){
-	var form = layui.form;
-	// 新中国年代名字生成
-	const china_era_name_dict = {
-		1959: {
-			"male": ["建国", "建华", "国华", "和平", "明", "建平", "军", "平", "志明", "德明"],
-			"female": ["秀英", "桂英", "秀兰", "玉兰", "桂兰", "秀珍", "凤英", "玉珍", "玉英", "兰英"],
-		},
-		1969: {
-			"male": ["军", "勇", "伟", "建国", "建华", "建军", "平", "建平", "强", "斌"],
-			"female": ["秀英", "桂英", "英", "玉兰", "萍", "秀兰", "玉梅", "红", "丽", "敏"],
-		},
-		1979: {
-			"male": ["勇", "军", "伟", "强", "刚", "建军", "涛", "斌", "波", "辉"],
-			"female": ["丽", "艳", "敏", "芳", "静", "霞", "红梅", "燕", "红", "英"],
-		},
-		1989: {
-			"male": ["伟", "磊", "勇", "涛", "超", "强", "鹏", "军", "波", "杰"],
-			"female": ["静", "丽", "娟", "艳", "燕", "敏", "娜", "芳", "丹", "玲"],
-		},
-		1999: {
-			"male": ["伟", "超", "涛", "杰", "鹏", "磊", "强", "浩", "鑫", "帅"],
-			"female": ["静", "婷", "敏", "婷婷", "丹", "雪", "丽", "倩", "艳", "娟"],
-		},
-		2009: {
-			"male": ["涛", "浩", "杰", "鑫", "俊杰", "磊", "帅", "宇", "浩然", "鹏"],
-			"female": ["婷", "欣怡", "婷婷", "静", "悦", "敏", "佳怡", "雪", "颖", "雨欣"],
-		},
-		2019: {
-			"male": ["浩宇", "浩然", "宇轩", "子轩", "宇航", "皓轩", "子豪", "浩轩", "俊杰", "子涵"],
-			"female": ["欣怡", "梓涵", "诗涵", "梓萱", "子涵", "紫涵", "佳怡", "雨涵", "雨欣", "一诺"],
-		},
-		2020: {
-			"male": ["奕辰", "宇轩", "浩宇", "亦辰", "宇辰", "子墨", "宇航", "浩然", "梓豪", "亦宸"],
-			"female": ["一诺", "依诺", "欣怡", "梓涵", "语桐", "欣妍", "可欣", "语汐", "雨桐", "梦瑶"],
-		},
-		2021: {
-			"male": ["沐宸", "浩宇", "沐辰", "茗泽", "奕辰", "宇泽", "浩然", "奕泽", "宇轩", "沐阳"],
-			"female": ["若汐", "一诺", "艺涵", "依诺", "梓涵", "故沫", "雨桐", "欣怡", "语桐", "语汐"],
-		},
-	};
-	// 不同年代人口最多的姓氏变化不大，就不区分年代了
-	const china_surname_array = ["王", "李", "张", "刘", "陈", "杨", "黄", "赵", "吴", "周", "徐", "孙", "马", "朱", "胡", "郭", "何", "林", "罗", "高"];
-	form.on('submit(china-era)', function(data){
-		var name_array = china_era_name_dict[data.field["era"]][data.field["sex"]];
-		var selected_name = random_select(name_array);
-		var selected_surname = random_select(china_surname_array);
-		var name = selected_surname + selected_name;
-		document.getElementById("china-era-result").innerText = name;
-		return false;
-	});
+    var form = layui.form;
+    /* 新中国年代名字生成 */
+    const china_era_name_dict = {
+        1959: {
+            "male": ["建国", "建华", "国华", "和平", "明", "建平", "军", "平", "志明", "德明"],
+            "female": ["秀英", "桂英", "秀兰", "玉兰", "桂兰", "秀珍", "凤英", "玉珍", "玉英", "兰英"],
+        },
+        1969: {
+            "male": ["军", "勇", "伟", "建国", "建华", "建军", "平", "建平", "强", "斌"],
+            "female": ["秀英", "桂英", "英", "玉兰", "萍", "秀兰", "玉梅", "红", "丽", "敏"],
+        },
+        1979: {
+            "male": ["勇", "军", "伟", "强", "刚", "建军", "涛", "斌", "波", "辉"],
+            "female": ["丽", "艳", "敏", "芳", "静", "霞", "红梅", "燕", "红", "英"],
+        },
+        1989: {
+            "male": ["伟", "磊", "勇", "涛", "超", "强", "鹏", "军", "波", "杰"],
+            "female": ["静", "丽", "娟", "艳", "燕", "敏", "娜", "芳", "丹", "玲"],
+        },
+        1999: {
+            "male": ["伟", "超", "涛", "杰", "鹏", "磊", "强", "浩", "鑫", "帅"],
+            "female": ["静", "婷", "敏", "婷婷", "丹", "雪", "丽", "倩", "艳", "娟"],
+        },
+        2009: {
+            "male": ["涛", "浩", "杰", "鑫", "俊杰", "磊", "帅", "宇", "浩然", "鹏"],
+            "female": ["婷", "欣怡", "婷婷", "静", "悦", "敏", "佳怡", "雪", "颖", "雨欣"],
+        },
+        2019: {
+            "male": ["浩宇", "浩然", "宇轩", "子轩", "宇航", "皓轩", "子豪", "浩轩", "俊杰", "子涵"],
+            "female": ["欣怡", "梓涵", "诗涵", "梓萱", "子涵", "紫涵", "佳怡", "雨涵", "雨欣", "一诺"],
+        },
+        2020: {
+            "male": ["奕辰", "宇轩", "浩宇", "亦辰", "宇辰", "子墨", "宇航", "浩然", "梓豪", "亦宸"],
+            "female": ["一诺", "依诺", "欣怡", "梓涵", "语桐", "欣妍", "可欣", "语汐", "雨桐", "梦瑶"],
+        },
+        2021: {
+            "male": ["沐宸", "浩宇", "沐辰", "茗泽", "奕辰", "宇泽", "浩然", "奕泽", "宇轩", "沐阳"],
+            "female": ["若汐", "一诺", "艺涵", "依诺", "梓涵", "故沫", "雨桐", "欣怡", "语桐", "语汐"],
+        },
+    };
+    // 不同年代人口最多的姓氏变化不大，就不区分年代了
+    const china_surname_array = ["王", "李", "张", "刘", "陈", "杨", "黄", "赵", "吴", "周", "徐", "孙", "马", "朱", "胡", "郭", "何", "林", "罗", "高"];
+    form.on('submit(china-era)', function(data){
+        var name_array = china_era_name_dict[data.field["era"]][data.field["sex"]];
+        var selected_name = random_select(name_array);
+        var selected_surname = random_select(china_surname_array);
+        var name = selected_surname + selected_name;
+        document.getElementById("china-era-result").innerText = name;
+        return false;
+    });
+    
+    /* 音译风格名字生成 */
+    // 下面的 python 代码可以生成每个汉语拼音（不考虑声调）和它对应的汉字
+    /*
+import json
+from Pinyin2Hanzi import DefaultHmmParams
+from Pinyin2Hanzi import viterbi
+from Pinyin2Hanzi import all_pinyin
+
+hmmparams = DefaultHmmParams()
+d = dict()
+
+for py in all_pinyin():
+    results = [result.path[0] for result in viterbi(hmm_params=hmmparams, observations=(py,), path_num = 1)]
+    d[py] = dict()
+    d[py]["male"] = results
+    d[py]["female"] = results
+
+print(json.dumps(d, ensure_ascii=False, sort_keys=True, indent=4))
+*/
+    // 再进行人工调整可以得到下表
+    const pinyin_dict = {
+        a: { female: ["阿"], male: ["阿"] },
+        ai: { female: ["艾"], male: ["艾"] },
+        an: { female: ["安"], male: ["安"] },
+        ang: { female: ["盎"], male: ["盎"] },
+        ao: { female: ["奥"], male: ["奥"] },
+        ba: { female: ["巴"], male: ["巴"] },
+        bai: { female: ["白", "百"], male: ["白", "百"] },
+        ban: { female: ["版"], male: ["版"] },
+        bang: { female: ["帮"], male: ["帮"] },
+        bao: { female: ["保"], male: ["保"] },
+        bei: { female: ["北"], male: ["北"] },
+        ben: { female: ["本"], male: ["本"] },
+        beng: { female: ["崩"], male: ["崩"] },
+        bi: { female: ["比"], male: ["比"] },
+        bian: { female: ["变"], male: ["变"] },
+        biao: { female: ["表"], male: ["表"] },
+        bie: { female: ["别"], male: ["别"] },
+        bin: { female: ["宾"], male: ["宾"] },
+        bing: { female: ["并"], male: ["并"] },
+        bo: { female: ["博"], male: ["博"] },
+        bu: { female: ["不"], male: ["不"] },
+        ca: { female: ["擦"], male: ["擦"] },
+        cai: { female: ["才"], male: ["才"] },
+        can: { female: ["参"], male: ["参"] },
+        cang: { female: ["苍"], male: ["苍"] },
+        cao: { female: ["操"], male: ["操"] },
+        ce: { female: ["测"], male: ["测"] },
+        cen: { female: ["参"], male: ["参"] },
+        ceng: { female: ["曾"], male: ["曾"] },
+        cha: { female: ["查"], male: ["查"] },
+        chai: { female: ["拆"], male: ["拆"] },
+        chan: { female: ["产"], male: ["产"] },
+        chang: { female: ["长"], male: ["长"] },
+        chao: { female: ["超"], male: ["超"] },
+        che: { female: ["车"], male: ["车"] },
+        chen: { female: ["沉"], male: ["沉"] },
+        cheng: { female: ["成"], male: ["成"] },
+        chi: { female: ["吃"], male: ["吃"] },
+        chong: { female: ["重"], male: ["重"] },
+        chou: { female: ["抽"], male: ["抽"] },
+        chu: { female: ["出"], male: ["出"] },
+        chua: { female: ["欻"], male: ["欻"] },
+        chuai: { female: ["揣"], male: ["揣"] },
+        chuan: { female: ["传"], male: ["传"] },
+        chuang: { female: ["创"], male: ["创"] },
+        chui: { female: ["吹"], male: ["吹"] },
+        chun: { female: ["春"], male: ["春"] },
+        chuo: { female: ["绰"], male: ["绰"] },
+        ci: { female: ["此"], male: ["此"] },
+        cong: { female: ["从"], male: ["从"] },
+        cou: { female: ["凑"], male: ["凑"] },
+        cu: { female: ["促"], male: ["促"] },
+        cuan: { female: ["篡"], male: ["篡"] },
+        cui: { female: ["催"], male: ["催"] },
+        cun: { female: ["存"], male: ["存"] },
+        cuo: { female: ["错"], male: ["错"] },
+        da: { female: ["大"], male: ["大"] },
+        dai: { female: ["代"], male: ["代"] },
+        dan: { female: ["但"], male: ["但"] },
+        dang: { female: ["当"], male: ["当"] },
+        dao: { female: ["到"], male: ["到"] },
+        de: { female: ["的"], male: ["的"] },
+        dei: { female: ["得"], male: ["得"] },
+        den: { female: ["扥"], male: ["扥"] },
+        deng: { female: ["等"], male: ["等"] },
+        di: { female: ["地"], male: ["地"] },
+        dia: { female: ["嗲"], male: ["嗲"] },
+        dian: { female: ["电"], male: ["电"] },
+        diao: { female: ["调"], male: ["调"] },
+        die: { female: ["跌"], male: ["跌"] },
+        ding: { female: ["定"], male: ["定"] },
+        diu: { female: ["丢"], male: ["丢"] },
+        dong: { female: ["动"], male: ["动"] },
+        dou: { female: ["都"], male: ["都"] },
+        du: { female: ["独"], male: ["独"] },
+        duan: { female: ["短"], male: ["短"] },
+        dui: { female: ["对"], male: ["对"] },
+        dun: { female: ["顿"], male: ["顿"] },
+        duo: { female: ["多"], male: ["多"] },
+        e: { female: ["恶"], male: ["恶"] },
+        ei: { female: ["诶"], male: ["诶"] },
+        en: { female: ["恩"], male: ["恩"] },
+        er: { female: ["而"], male: ["而"] },
+        fa: { female: ["发"], male: ["发"] },
+        fan: { female: ["反"], male: ["反"] },
+        fang: { female: ["方"], male: ["方"] },
+        fei: { female: ["非"], male: ["非"] },
+        fen: { female: ["分"], male: ["分"] },
+        feng: { female: ["风"], male: ["风"] },
+        fiao: { female: ["覅"], male: ["覅"] },
+        fo: { female: ["佛"], male: ["佛"] },
+        fou: { female: ["否"], male: ["否"] },
+        fu: { female: ["服"], male: ["服"] },
+        ga: { female: ["嘎"], male: ["嘎"] },
+        gai: { female: ["改"], male: ["改"] },
+        gan: { female: ["感"], male: ["感"] },
+        gang: { female: ["刚"], male: ["刚"] },
+        gao: { female: ["高"], male: ["高"] },
+        ge: { female: ["各"], male: ["各"] },
+        gei: { female: ["给"], male: ["给"] },
+        gen: { female: ["根"], male: ["根"] },
+        geng: { female: ["更"], male: ["更"] },
+        gong: { female: ["公"], male: ["公"] },
+        gou: { female: ["购"], male: ["购"] },
+        gu: { female: ["股"], male: ["股"] },
+        gua: { female: ["挂"], male: ["挂"] },
+        guai: { female: ["怪"], male: ["怪"] },
+        guan: { female: ["管"], male: ["管"] },
+        guang: { female: ["广"], male: ["广"] },
+        gui: { female: ["规"], male: ["规"] },
+        gun: { female: ["滚"], male: ["滚"] },
+        guo: { female: ["国"], male: ["国"] },
+        ha: { female: ["哈"], male: ["哈"] },
+        hai: { female: ["还"], male: ["还"] },
+        han: { female: ["汉"], male: ["汉"] },
+        hang: { female: ["行"], male: ["行"] },
+        hao: { female: ["好"], male: ["好"] },
+        he: { female: ["合"], male: ["合"] },
+        hei: { female: ["黑"], male: ["黑"] },
+        hen: { female: ["很"], male: ["很"] },
+        heng: { female: ["横"], male: ["横"] },
+        hong: { female: ["红"], male: ["红"] },
+        hou: { female: ["后"], male: ["后"] },
+        hu: { female: ["互"], male: ["互"] },
+        hua: { female: ["花"], male: ["花"] },
+        huai: { female: ["怀"], male: ["怀"] },
+        huan: { female: ["环"], male: ["环"] },
+        huang: { female: ["黄"], male: ["黄"] },
+        hui: { female: ["回"], male: ["回"] },
+        hun: { female: ["婚"], male: ["婚"] },
+        huo: { female: ["活"], male: ["活"] },
+        ji: { female: ["机"], male: ["机"] },
+        jia: { female: ["加"], male: ["加"] },
+        jian: { female: ["建"], male: ["建"] },
+        jiang: { female: ["将"], male: ["将"] },
+        jiao: { female: ["教"], male: ["教"] },
+        jie: { female: ["结"], male: ["结"] },
+        jin: { female: ["进"], male: ["进"] },
+        jing: { female: ["经"], male: ["经"] },
+        jiong: { female: ["窘"], male: ["窘"] },
+        jiu: { female: ["就"], male: ["就"] },
+        ju: { female: ["具"], male: ["具"] },
+        juan: { female: ["卷"], male: ["卷"] },
+        jun: { female: ["军"], male: ["军"] },
+        jve: { female: ["决"], male: ["决"] },
+        ka: { female: ["卡"], male: ["卡"] },
+        kai: { female: ["开"], male: ["开"] },
+        kan: { female: ["看"], male: ["看"] },
+        kang: { female: ["抗"], male: ["抗"] },
+        kao: { female: ["考"], male: ["考"] },
+        ke: { female: ["可"], male: ["可"] },
+        kei: { female: ["剋"], male: ["剋"] },
+        ken: { female: ["肯"], male: ["肯"] },
+        keng: { female: ["坑"], male: ["坑"] },
+        kong: { female: ["空"], male: ["空"] },
+        kou: { female: ["口"], male: ["口"] },
+        ku: { female: ["苦"], male: ["苦"] },
+        kua: { female: ["跨"], male: ["跨"] },
+        kuai: { female: ["快"], male: ["快"] },
+        kuan: { female: ["宽"], male: ["宽"] },
+        kuang: { female: ["狂"], male: ["狂"] },
+        kui: { female: ["亏"], male: ["亏"] },
+        kun: { female: ["困"], male: ["困"] },
+        kuo: { female: ["扩"], male: ["扩"] },
+        la: { female: ["拉"], male: ["拉"] },
+        lai: { female: ["来"], male: ["来"] },
+        lan: { female: ["蓝"], male: ["蓝"] },
+        lang: { female: ["浪"], male: ["浪"] },
+        lao: { female: ["老"], male: ["老"] },
+        le: { female: ["了"], male: ["了"] },
+        lei: { female: ["类"], male: ["类"] },
+        leng: { female: ["冷"], male: ["冷"] },
+        li: { female: ["理"], male: ["理"] },
+        lia: { female: ["俩"], male: ["俩"] },
+        lian: { female: ["联"], male: ["联"] },
+        liang: { female: ["两"], male: ["两"] },
+        liao: { female: ["聊"], male: ["聊"] },
+        lie: { female: ["列"], male: ["列"] },
+        lin: { female: ["临"], male: ["临"] },
+        ling: { female: ["领"], male: ["领"] },
+        liu: { female: ["留"], male: ["留"] },
+        lo: { female: ["咯"], male: ["咯"] },
+        long: { female: ["龙"], male: ["龙"] },
+        lou: { female: ["楼"], male: ["楼"] },
+        lu: { female: ["路"], male: ["路"] },
+        luan: { female: ["乱"], male: ["乱"] },
+        lun: { female: ["论"], male: ["论"] },
+        luo: { female: ["落"], male: ["落"] },
+        lv: { female: ["旅"], male: ["旅"] },
+        lve: { female: ["略"], male: ["略"] },
+        ma: { female: ["马"], male: ["马"] },
+        mai: { female: ["买"], male: ["买"] },
+        man: { female: ["曼"], male: ["曼"] },
+        mang: { female: ["忙"], male: ["忙"] },
+        mao: { female: ["贸"], male: ["贸"] },
+        me: { female: ["濹"], male: ["濹"] },
+        mei: { female: ["没"], male: ["没"] },
+        men: { female: ["门"], male: ["门"] },
+        meng: { female: ["梦"], male: ["梦"] },
+        mi: { female: ["密"], male: ["密"] },
+        mian: { female: ["免"], male: ["免"] },
+        miao: { female: ["描"], male: ["描"] },
+        mie: { female: ["灭"], male: ["灭"] },
+        min: { female: ["民"], male: ["民"] },
+        ming: { female: ["名"], male: ["名"] },
+        miu: { female: ["谬"], male: ["谬"] },
+        mo: { female: ["模"], male: ["模"] },
+        mou: { female: ["某"], male: ["某"] },
+        mu: { female: ["目"], male: ["目"] },
+        na: { female: ["娜"], male: ["那"] },
+        nai: { female: ["耐"], male: ["耐"] },
+        nan: { female: ["男"], male: ["男"] },
+        nang: { female: ["囊"], male: ["囊"] },
+        nao: { female: ["脑"], male: ["脑"] },
+        ne: { female: ["呢"], male: ["呢"] },
+        nei: { female: ["内"], male: ["内"] },
+        nen: { female: ["嫩"], male: ["嫩"] },
+        neng: { female: ["能"], male: ["能"] },
+        ni: { female: ["你"], male: ["你"] },
+        nian: { female: ["年"], male: ["年"] },
+        niang: { female: ["娘"], male: ["娘"] },
+        niao: { female: ["尿"], male: ["尿"] },
+        nie: { female: ["捏"], male: ["捏"] },
+        nin: { female: ["您"], male: ["您"] },
+        ning: { female: ["宁"], male: ["宁"] },
+        niu: { female: ["牛"], male: ["牛"] },
+        nong: { female: ["农"], male: ["农"] },
+        nou: { female: ["鐞"], male: ["鐞"] },
+        nu: { female: ["努"], male: ["努"] },
+        nuan: { female: ["暖"], male: ["暖"] },
+        null: { female: ["叾"], male: ["叾"] },
+        nun: { female: ["黁"], male: ["黁"] },
+        nuo: { female: ["诺"], male: ["诺"] },
+        nv: { female: ["女"], male: ["女"] },
+        nve: { female: ["虐"], male: ["虐"] },
+        o: { female: ["哦"], male: ["哦"] },
+        ou: { female: ["欧"], male: ["欧"] },
+        pa: { female: ["爬"], male: ["爬"] },
+        pai: { female: ["排"], male: ["排"] },
+        pan: { female: ["判"], male: ["判"] },
+        pang: { female: ["旁"], male: ["旁"] },
+        pao: { female: ["跑"], male: ["跑"] },
+        pei: { female: ["配"], male: ["配"] },
+        pen: { female: ["喷"], male: ["喷"] },
+        peng: { female: ["朋"], male: ["朋"] },
+        pi: { female: ["批"], male: ["批"] },
+        pian: { female: ["片"], male: ["片"] },
+        piao: { female: ["漂"], male: ["漂"] },
+        pie: { female: ["瞥"], male: ["瞥"] },
+        pin: { female: ["品"], male: ["品"] },
+        ping: { female: ["平"], male: ["平"] },
+        po: { female: ["破"], male: ["破"] },
+        pou: { female: ["剖"], male: ["剖"] },
+        pu: { female: ["普"], male: ["普"] },
+        qi: { female: ["其"], male: ["其"] },
+        qia: { female: ["恰"], male: ["恰"] },
+        qian: { female: ["前"], male: ["前"] },
+        qiang: { female: ["强"], male: ["强"] },
+        qiao: { female: ["巧"], male: ["巧"] },
+        qie: { female: ["切"], male: ["切"] },
+        qin: { female: ["亲"], male: ["亲"] },
+        qing: { female: ["请"], male: ["请"] },
+        qiong: { female: ["穷"], male: ["穷"] },
+        qiu: { female: ["求"], male: ["求"] },
+        qu: { female: ["去"], male: ["去"] },
+        quan: { female: ["全"], male: ["全"] },
+        qun: { female: ["群"], male: ["群"] },
+        qve: { female: ["确"], male: ["确"] },
+        ran: { female: ["然"], male: ["然"] },
+        rang: { female: ["让"], male: ["让"] },
+        rao: { female: ["绕"], male: ["绕"] },
+        re: { female: ["热"], male: ["热"] },
+        ren: { female: ["人"], male: ["人"] },
+        reng: { female: ["仍"], male: ["仍"] },
+        ri: { female: ["日"], male: ["日"] },
+        rong: { female: ["容"], male: ["容"] },
+        rou: { female: ["柔"], male: ["柔"] },
+        ru: { female: ["如"], male: ["如"] },
+        ruan: { female: ["软"], male: ["软"] },
+        rui: { female: ["瑞"], male: ["瑞"] },
+        run: { female: ["润"], male: ["润"] },
+        ruo: { female: ["若"], male: ["若"] },
+        sa: { female: ["萨"], male: ["萨"] },
+        sai: { female: ["赛"], male: ["赛"] },
+        san: { female: ["三"], male: ["三"] },
+        sang: { female: ["丧"], male: ["丧"] },
+        sao: { female: ["扫"], male: ["扫"] },
+        se: { female: ["色"], male: ["色"] },
+        sen: { female: ["森"], male: ["森"] },
+        seng: { female: ["僧"], male: ["僧"] },
+        sha: { female: ["莎"], male: ["莎"] },
+        shai: { female: ["筛"], male: ["筛"] },
+        shan: { female: ["山"], male: ["山"] },
+        shang: { female: ["上"], male: ["上"] },
+        shao: { female: ["少"], male: ["少"] },
+        she: { female: ["设"], male: ["设"] },
+        shei: { female: ["誰"], male: ["誰"] },
+        shen: { female: ["身"], male: ["身"] },
+        sheng: { female: ["生"], male: ["生"] },
+        shi: { female: ["时"], male: ["时"] },
+        shou: { female: ["手"], male: ["手"] },
+        shu: { female: ["数"], male: ["数"] },
+        shua: { female: ["刷"], male: ["刷"] },
+        shuai: { female: ["帅"], male: ["帅"] },
+        shuan: { female: ["栓"], male: ["栓"] },
+        shuang: { female: ["双"], male: ["双"] },
+        shui: { female: ["水"], male: ["水"] },
+        shun: { female: ["顺"], male: ["顺"] },
+        shuo: { female: ["说"], male: ["说"] },
+        si: { female: ["四"], male: ["四"] },
+        song: { female: ["送"], male: ["送"] },
+        sou: { female: ["搜"], male: ["搜"] },
+        su: { female: ["速"], male: ["速"] },
+        suan: { female: ["算"], male: ["算"] },
+        sui: { female: ["随"], male: ["随"] },
+        sun: { female: ["损"], male: ["损"] },
+        suo: { female: ["所"], male: ["所"] },
+        ta: { female: ["他"], male: ["他"] },
+        tai: { female: ["太"], male: ["太"] },
+        tan: { female: ["探"], male: ["探"] },
+        tang: { female: ["糖"], male: ["糖"] },
+        tao: { female: ["讨"], male: ["讨"] },
+        te: { female: ["特"], male: ["特"] },
+        teng: { female: ["疼"], male: ["疼"] },
+        ti: { female: ["提"], male: ["提"] },
+        tian: { female: ["天"], male: ["天"] },
+        tiao: { female: ["调"], male: ["调"] },
+        tie: { female: ["帖"], male: ["帖"] },
+        ting: { female: ["听"], male: ["听"] },
+        tong: { female: ["同"], male: ["同"] },
+        tou: { female: ["投"], male: ["投"] },
+        tu: { female: ["图"], male: ["图"] },
+        tuan: { female: ["团"], male: ["团"] },
+        tui: { female: ["推"], male: ["推"] },
+        tun: { female: ["吞"], male: ["吞"] },
+        tuo: { female: ["脱"], male: ["脱"] },
+        wa: { female: ["挖"], male: ["挖"] },
+        wai: { female: ["外"], male: ["外"] },
+        wan: { female: ["完"], male: ["完"] },
+        wang: { female: ["网"], male: ["网"] },
+        wei: { female: ["为"], male: ["为"] },
+        wen: { female: ["文"], male: ["文"] },
+        weng: { female: ["嗡"], male: ["嗡"] },
+        wo: { female: ["我"], male: ["我"] },
+        wu: { female: ["无"], male: ["无"] },
+        xi: { female: ["系"], male: ["系"] },
+        xia: { female: ["下"], male: ["下"] },
+        xian: { female: ["现"], male: ["现"] },
+        xiang: { female: ["相"], male: ["相"] },
+        xiao: { female: ["小"], male: ["小"] },
+        xie: { female: ["协"], male: ["协"] },
+        xin: { female: ["新"], male: ["新"] },
+        xing: { female: ["行"], male: ["行"] },
+        xiong: { female: ["兄"], male: ["兄"] },
+        xiu: { female: ["修"], male: ["修"] },
+        xu: { female: ["需"], male: ["需"] },
+        xuan: { female: ["选"], male: ["选"] },
+        xun: { female: ["寻"], male: ["寻"] },
+        xve: { female: ["学"], male: ["学"] },
+        ya: { female: ["压"], male: ["压"] },
+        yan: { female: ["研"], male: ["研"] },
+        yang: { female: ["样"], male: ["样"] },
+        yao: { female: ["要"], male: ["要"] },
+        ye: { female: ["也"], male: ["也"] },
+        yi: { female: ["一"], male: ["一"] },
+        yin: { female: ["因"], male: ["因"] },
+        ying: { female: ["应"], male: ["应"] },
+        yo: { female: ["哟"], male: ["哟"] },
+        yong: { female: ["用"], male: ["用"] },
+        you: { female: ["有"], male: ["有"] },
+        yu: { female: ["预"], male: ["预"] },
+        yuan: { female: ["原"], male: ["原"] },
+        yun: { female: ["运"], male: ["运"] },
+        yve: { female: ["阅"], male: ["阅"] },
+        za: { female: ["杂"], male: ["杂"] },
+        zai: { female: ["在"], male: ["在"] },
+        zan: { female: ["暂"], male: ["暂"] },
+        zang: { female: ["脏"], male: ["脏"] },
+        zao: { female: ["早"], male: ["早"] },
+        ze: { female: ["责"], male: ["责"] },
+        zei: { female: ["贼"], male: ["贼"] },
+        zen: { female: ["怎"], male: ["怎"] },
+        zeng: { female: ["增"], male: ["增"] },
+        zha: { female: ["炸"], male: ["炸"] },
+        zhai: { female: ["摘"], male: ["摘"] },
+        zhan: { female: ["战"], male: ["战"] },
+        zhang: { female: ["长"], male: ["长"] },
+        zhao: { female: ["招"], male: ["招"] },
+        zhe: { female: ["这"], male: ["这"] },
+        zhei: { female: ["这"], male: ["这"] },
+        zhen: { female: ["真"], male: ["真"] },
+        zheng: { female: ["正"], male: ["正"] },
+        zhi: { female: ["之"], male: ["之"] },
+        zhong: { female: ["中"], male: ["中"] },
+        zhou: { female: ["周"], male: ["周"] },
+        zhu: { female: ["主"], male: ["主"] },
+        zhua: { female: ["抓"], male: ["抓"] },
+        zhuai: { female: ["拽"], male: ["拽"] },
+        zhuan: { female: ["专"], male: ["专"] },
+        zhuang: { female: ["状"], male: ["状"] },
+        zhui: { female: ["追"], male: ["追"] },
+        zhun: { female: ["准"], male: ["准"] },
+        zhuo: { female: ["桌"], male: ["桌"] },
+        zi: { female: ["自"], male: ["自"] },
+        zong: { female: ["总"], male: ["总"] },
+        zou: { female: ["走"], male: ["走"] },
+        zu: { female: ["组"], male: ["组"] },
+        zuan: { female: ["钻"], male: ["钻"] },
+        zui: { female: ["最"], male: ["最"] },
+        zun: { female: ["尊"], male: ["尊"] },
+        zuo: { female: ["作"], male: ["作"] }
+    };
+
+    form.on('submit(transliteration)', function(data){
+        var keys = new Array();
+        for (key in pinyin_dict){
+            keys.push(key);
+        }
+        var name = "";
+        for (var i=0; i < data.field["number"]; i++) {
+            var key = random_select(keys);
+            var character = random_select(pinyin_dict[key][data.field["sex"]]);
+            name = name + character;
+        }
+        document.getElementById("transliteration-result").innerText = name;
+        return false;
+    });
 });
 </script>
 
