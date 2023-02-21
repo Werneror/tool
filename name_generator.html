@@ -45,16 +45,14 @@
         <label class="layui-form-label">出生年代</label>
         <div class="layui-input-block">
           <select name="era" lay-verify="required">
-            <option value="2022">2022 年</option>
-            <option value="2021">2021 年</option>
-            <option value="2020">2020 年</option>
+            <option value="2029" selected="selected">2020 ~ 今年</option>
             <option value="2019">2010 ~ 2019 年</option>
             <option value="2009">2000 ~ 2009 年</option>
             <option value="1999">1990 ~ 1999 年</option>
             <option value="1989">1980 ~ 1989 年</option>
             <option value="1979">1970 ~ 1979 年</option>
             <option value="1969">1960 ~ 1969 年</option>
-            <option value="1959" selected="selected">1959 年及以前</option>
+            <option value="1959">1959 年及以前</option>
           </select>
         </div>
       </div>
@@ -80,8 +78,8 @@
 		<div class="layui-colla-content">
 			<p style="margin-top: 10px;">1. 《<a href="http://www.gov.cn/xinwen/2021-02/08/content_5585906.htm" target="_blank"><二〇二〇年全国姓名报告>发布</a>》</p>
 			<p style="margin-top: 10px;">2. 《<a href="https://www.zj.gov.cn/art/2022/1/31/art_1229530745_59664848.html" target="_blank">二〇二一年全国姓名报告</a>》</p>
-			<p style="margin-top: 10px;">3. 《<a href="https://www.ningbo.gov.cn/art/2023/1/17/art_1229099768_59448763.html" target="_blank">2022年新生儿爆款名字出炉！（宁波）</a>》</p>
-			<p style="margin-top: 10px;">4. 《<a href="https://focus.scol.com.cn/zgsz/202301/58795177.html" target="_blank">成都2022年新生儿爆款名字出炉！</a>》</p>
+			<p style="margin-top: 10px;">3. 《<a href="https://www.ningbo.gov.cn/art/2023/1/17/art_1229099768_59448763.html" target="_blank">宁波 2022 年新生儿爆款名字出炉</a>》</p>
+			<p style="margin-top: 10px;">4. 《<a href="https://focus.scol.com.cn/zgsz/202301/58795177.html" target="_blank">成都 2022 年新生儿爆款名字出炉</a>》</p>
 		</div>
 	  </div>
 	</div>
@@ -180,17 +178,9 @@ layui.use('form', function(){
             "male": ["浩宇", "浩然", "宇轩", "子轩", "宇航", "皓轩", "子豪", "浩轩", "俊杰", "子涵"],
             "female": ["欣怡", "梓涵", "诗涵", "梓萱", "子涵", "紫涵", "佳怡", "雨涵", "雨欣", "一诺"],
         },
-        2020: {
-            "male": ["奕辰", "宇轩", "浩宇", "亦辰", "宇辰", "子墨", "宇航", "浩然", "梓豪", "亦宸"],
-            "female": ["一诺", "依诺", "欣怡", "梓涵", "语桐", "欣妍", "可欣", "语汐", "雨桐", "梦瑶"],
-        },
-        2021: {
-            "male": ["沐宸", "浩宇", "沐辰", "茗泽", "奕辰", "宇泽", "浩然", "奕泽", "宇轩", "沐阳"],
-            "female": ["若汐", "一诺", "艺涵", "依诺", "梓涵", "故沫", "雨桐", "欣怡", "语桐", "语汐"],
-        },
-        2022: {
-            "male": ['昱辰', '瑞霖', '泽瑞', '奕辰', '沐辰', '梓瑞', '子屹', '昱珩', '浩宇', '星辰', '沐宸', '珩', '锦瑞', '瑞泽', '亦辰', '沐阳'],
-            "female": ['玥', '语桐', '可欣', '依诺', '一诺', '昕玥', '悠然', '瑾瑜', '亦可', '瑾妍', '诗玥', '伊一', '雨桐', '汐玥', '沐瑶', '欣玥', '梓涵'],
+        2029: {
+            "male": ['瑞泽', '浩宇', '浩然', '沐辰', '昱辰', '珩', '沐阳', '宇航', '宇辰', '奕泽', '星辰', '奕辰', '昱珩', '亦辰', '宇轩', '沐宸', '梓豪', '亦宸', '茗泽', '宇泽', '子墨', '子屹', '梓瑞', '泽瑞', '瑞霖', '锦瑞'],
+            "female": ['梦瑶', '梓涵', '语汐', '昕玥', '雨桐', '欣妍', '可欣', '悠然', '伊一', '瑾妍', '艺涵', '亦可', '欣怡', '一诺', '故沫', '玥', '欣玥', '语桐', '汐玥', '依诺', '若汐', '沐瑶', '瑾瑜', '诗玥'],
         },
     };
     // 不同年代人口最多的姓氏变化不大，就不区分年代了
