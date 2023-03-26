@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="一些自写自用的简单工具">
+    <meta name="author" content="Werner">
+    <title>拼音标注</title>
+	<link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
+    <style>
+		.site-h1{
+			margin-top: 10px;
+			margin-bottom: 20px;
+			color: #393D49;
+			font-size: 28px;
+			font-weight: 300;
+		}
+    </style>
+</head>
+
+<body class="layui-bg-gray">
+
+<div class="layui-bg-gray layui-container">
+	<h1 class="site-h1">拼音标注</h1>
+	<blockquote class="layui-elem-quote layui-quote-nm">为输入的汉字标注拼音</blockquote>
+    <form class="layui-form" action="" lay-filter="pinyin">
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">输入</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入内容" name="text" rows="20" class="layui-textarea"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item" pane="">
+			<label class="layui-form-label">选项</label>
+				<div class="layui-input-block">
+				<input type="checkbox" name="options[only_last]" lay-skin="primary" title="仅标注行末汉字" checked="">
+				<input type="checkbox" name="options[none_tone]" lay-skin="primary" title="不标注声调">
+				<input type="checkbox" name="options[surname]" lay-skin="primary" title="开启姓氏模式">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">显示</label>
+				<div class="layui-input-block">
+				<input type="radio" name="display" value="all" title="完整" checked>
+				<input type="radio" name="display" value="initial" title="声母">
+				<input type="radio" name="display" value="final" title="韵母">
+				<input type="radio" name="display" value="finalHead" title="韵头">
+				<input type="radio" name="display" value="finalBody" title="韵腹">
+				<input type="radio" name="display" value="finalTail" title="韵尾">
+				<input type="radio" name="display" value="num" title="声调">
+				<input type="radio" name="display" value="first" title="首字母">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit lay-filter="phonetic">注音</button>
+			</div>
+		</div>
+    </form>
+</div>
+
+<script src="https://unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script src="https://unpkg.com/pinyin-pro"></script>
+<script>
+var { pinyin } = pinyinPro;
+
+function phonetic(field) {
+	var options = {
+		type: 'array',
+		nonZh: 'removed',
+	}
+	if (field.display != "all") {
+		options.pattern = field.display;
+	}
+	var only_last = false;
+	if (field.hasOwnProperty("options[only_last]")) {
+		only_last = true;
+	}
+	if (field.hasOwnProperty("options[none_tone]")) {
+		options.toneType = 'none';
+	}
+	if (field.hasOwnProperty("options[surname]")) {
+		options.mode = 'surname';
+	}
+	// 删除以前标注的拼音
+	var text = field.text.replace(/（.*?）/g, '')
+	var results = "";
+	var lines = text.split('\n');
+	for (line of lines) {
+		var pinyins = pinyin(line, options);
+		var new_line = "";
+		var j = 0;
+		for (var i = 0; i < line.length; i++) {
+			var c = line[i];
+			new_line += c;
+			// 若相等说明不是需要注音的汉字，不用处理
+			if (pinyin(c) != c) {
+				if (only_last) {
+					if (j == pinyins.length-1) {
+						new_line += "（" + pinyins[j] + "）";
+					}
+				} else {
+					new_line += "（" + pinyins[j] + "）";
+				}
+				j += 1;
+			}
+		}
+		results += new_line + "\n";
+	}
+	return results.trim();
+}
+
+layui.use('form', function(){
+    var form = layui.form;
+    form.on('submit(phonetic)', function(data){
+		var results = phonetic(data.field);
+		form.val('pinyin', {
+			'text': results,
+		})
+		return false;
+    });
+});
+</script>
+
+</body>
+
+</html>
