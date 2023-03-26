@@ -31,12 +31,12 @@
 				<textarea placeholder="请输入内容" name="text" rows="20" class="layui-textarea"></textarea>
 			</div>
 		</div>
-		<div class="layui-form-item" pane="">
-			<label class="layui-form-label">选项</label>
+		<div class="layui-form-item">
+			<label class="layui-form-label">标注</label>
 				<div class="layui-input-block">
-				<input type="checkbox" name="options[only_last]" lay-skin="primary" title="仅标注行末汉字" checked="">
-				<input type="checkbox" name="options[none_tone]" lay-skin="primary" title="不标注声调">
-				<input type="checkbox" name="options[surname]" lay-skin="primary" title="开启姓氏模式">
+				<input type="radio" name="which" value="all" title="所有汉字">
+				<input type="radio" name="which" value="end_of_line" title="行末汉字" checked>
+				<input type="radio" name="which" value="before_punctuation" title="标点前汉字">
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -52,6 +52,14 @@
 				<input type="radio" name="display" value="first" title="首字母">
 			</div>
 		</div>
+		<div class="layui-form-item" pane="">
+			<label class="layui-form-label">选项</label>
+				<div class="layui-input-block">
+				<input type="checkbox" name="options[none_tone]" lay-skin="primary" title="不标注声调">
+				<input type="checkbox" name="options[surname]" lay-skin="primary" title="开启姓氏模式">
+				<input type="checkbox" name="options[auto_linefeed]" lay-skin="primary" title="标注标点前汉字时自动换行" checked>
+			</div>
+		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit lay-filter="phonetic">注音</button>
@@ -65,6 +73,16 @@
 <script>
 var { pinyin } = pinyinPro;
 
+function is_punctuation(c) {
+	var punctuations = "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~！？｡＂＃＄％＆＇（）＊＋。，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏";
+	var i = punctuations.indexOf(c);
+	if (i == -1) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
 function phonetic(field) {
 	var options = {
 		type: 'array',
@@ -73,16 +91,17 @@ function phonetic(field) {
 	if (field.display != "all") {
 		options.pattern = field.display;
 	}
-	var only_last = false;
-	if (field.hasOwnProperty("options[only_last]")) {
-		only_last = true;
-	}
 	if (field.hasOwnProperty("options[none_tone]")) {
 		options.toneType = 'none';
 	}
 	if (field.hasOwnProperty("options[surname]")) {
 		options.mode = 'surname';
 	}
+	var auto_linefeed = false;
+	if (field.hasOwnProperty("options[auto_linefeed]")) {
+		auto_linefeed = true;
+	}
+	var which = field.which;
 	// 删除以前标注的拼音
 	var text = field.text.replace(/（.*?）/g, '')
 	var results = "";
@@ -94,11 +113,23 @@ function phonetic(field) {
 		for (var i = 0; i < line.length; i++) {
 			var c = line[i];
 			new_line += c;
-			// 若相等说明不是需要注音的汉字，不用处理
+			// 若相等说明不是需要注音的汉字
 			if (pinyin(c) != c) {
-				if (only_last) {
+				if (which == "end_of_line") {
 					if (j == pinyins.length-1) {
 						new_line += "（" + pinyins[j] + "）";
+					}
+				} else if (which == "before_punctuation") {
+					var next_c = "";
+					if (i <= line.length-2) {
+						next_c = line[i+1];
+					}
+					if (next_c == "" || is_punctuation(next_c)) {
+						new_line += "（" + pinyins[j] + "）" + next_c;
+						if (next_c != "" && i <= line.length-3 && auto_linefeed) {
+							new_line += "\n";
+						}
+						i++;
 					}
 				} else {
 					new_line += "（" + pinyins[j] + "）";
