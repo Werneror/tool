@@ -156,10 +156,10 @@ layui.use('form', function(){
 		}
 		var synonyms1 = search_synonyms(data.field.word1, distance, same_length);
 		var synonyms2 = search_synonyms(data.field.word2, distance, same_length);
-		if (synonyms1.size > 0) {
+		if (data.field.word1) {
 			form.val('rhyming_synonyms', {'synonyms1': Array.from(synonyms1).join('\n')});
 		}
-		if (synonyms2.size > 0) {
+		if (data.field.word2) {
 			form.val('rhyming_synonyms', {'synonyms2': Array.from(synonyms2).join('\n')});
 		}
 		return false;
