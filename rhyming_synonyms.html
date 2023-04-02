@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="一些自写自用的简单工具">
+    <meta name="author" content="Werner">
+    <title>押韵相关词检索</title>
+	<link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
+    <style>
+		.site-h1{
+			margin-top: 10px;
+			margin-bottom: 20px;
+			color: #393D49;
+			font-size: 28px;
+			font-weight: 300;
+		}
+    </style>
+</head>
+
+<body class="layui-bg-gray">
+
+<div class="layui-bg-gray layui-container">
+	<h1 class="site-h1">押韵相关词检索</h1>
+	<blockquote class="layui-elem-quote layui-quote-nm">输入两个汉语词语，分别查找它们的相关词，并按韵脚分组。</blockquote>
+    <form class="layui-form" action="" lay-filter="rhyming_synonyms">
+		<div class="layui-form-item">
+			<label class="layui-form-label">词语</label>
+			<div class="layui-input-inline" style="width: 120px;">
+				<input type="text" name="word1" placeholder="词语 1" autocomplete="off" class="layui-input">
+			</div>
+			<div class="layui-form-mid">-</div>
+			<div class="layui-input-inline" style="width: 120px;">
+				<input type="text" name="word2" placeholder="词语 2" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">相关词距离</label>
+				<div class="layui-input-block">
+				<input type="radio" name="distance" value="1" title="近">
+				<input type="radio" name="distance" value="2" title="中" checked>
+				<input type="radio" name="distance" value="3" title="远">
+			</div>
+		</div>
+		<div class="layui-form-item" pane="">
+			<label class="layui-form-label">选项</label>
+			<div class="layui-input-block">
+				<input type="checkbox" name="same_length" lay-skin="primary" title="字数必须相同">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit lay-filter="synonyms">查询相关词</button>
+			</div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">相关词</label>
+			<div class="layui-input-inline">
+				<textarea placeholder="词语 1 的相关词" name="synonyms1" rows="15" class="layui-textarea"></textarea>
+			</div>
+			<div class="layui-form-mid">-</div>
+			<div class="layui-input-inline">
+				<textarea placeholder="词语 2 的相关词" name="synonyms2" rows="15" class="layui-textarea"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit lay-filter="rhyming">按韵脚分组</button>
+			</div>
+		</div>
+    </form>
+	<table id="results" lay-filter="results"></table>
+	<div>
+</div>
+
+<script src="https://unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script src="./js/hit_synonyms_ext.js"></script>
+<script src="./js/search_synonyms.js"></script>
+<script src="https://unpkg.com/pinyin-pro"></script>
+<script>
+var { pinyin } = pinyinPro;
+
+// 给输入词语的最后一个汉字注音，只标注韵腹和韵尾，不标注拼音
+// 例如 床（chuáng）的拼音中韵头是 u，韵腹是 á，韵尾是 ng
+// 这样做的好处是可以识别到 长（cháng）和 床（chuáng）押韵
+function get_partial_pinyin(word) {
+	var c = word[word.length-1];
+	var options = {nonZh: 'removed', toneType: 'none'};
+	options.pattern = 'finalBody';
+	var body = pinyin(c, options);
+	options.pattern = 'finalTail';
+	var tail = pinyin(c, options);
+	var partial = body + tail;
+	return partial;
+}
+
+// 按韵脚对输入的单词分组
+function gruop_by_pinyin(words) {
+	var groups = new Array();
+	for (word of words) {
+		word = word.trim();
+		if (word == "") {
+			continue;
+		}
+		var rhyme = get_partial_pinyin(word);
+		if (rhyme == "") {
+			continue;
+		}
+		if (!groups.hasOwnProperty(rhyme)) {
+			groups[rhyme] = new Array();
+		}
+		groups[rhyme].push(word);
+	}
+	return groups;
+}
+
+// 按韵脚混合两组词语
+function mix_two_groups(groups1, groups2) {
+	var groups = new Array();
+	for (key in groups1) {
+		if (groups2.hasOwnProperty(key)) {
+			groups.push({
+				'rhyme': key,
+				'synonyms1': groups1[key].join("，"),
+				'synonyms2': groups2[key].join("，"),
+			});
+		}
+	}
+	return groups;
+}
+
+var cols = [[
+	{field: 'rhyme', title: '韵脚', width:80, sort: true},
+	{field: 'synonyms1', title: '词语 1 的相关词'},
+	{field: 'synonyms2', title: '词语 2 的相关词'}
+]];
+
+// 在页面上展示混合后的两组词语
+function display_mixd_groups(table, groups) {
+	table.render({
+		elem: '#results',
+		data: groups,
+		cols: cols,
+	});
+}
+
+layui.use('form', function(){
+    var form = layui.form;
+	var table = layui.table;
+    form.on('submit(synonyms)', function(data){
+		var distance = parseInt(data.field.distance);
+		var same_length = false;
+		if (data.field.same_length == "on") {
+			same_length = true;
+		}
+		var synonyms1 = search_synonyms(data.field.word1, distance, same_length);
+		var synonyms2 = search_synonyms(data.field.word2, distance, same_length);
+		form.val('rhyming_synonyms', {
+			'synonyms1': Array.from(synonyms1).join('\n'),
+			'synonyms2': Array.from(synonyms2).join('\n'),
+		})
+		return false;
+    });
+    form.on('submit(rhyming)', function(data){
+		var synonyms1 = data.field.synonyms1.split(/[\s，,。.；]/);
+		var synonyms2 = data.field.synonyms2.split(/[\s，,。.；]/);
+		var groups1 = gruop_by_pinyin(synonyms1);
+		var groups2 = gruop_by_pinyin(synonyms2);
+		var groups = mix_two_groups(groups1, groups2);
+		display_mixd_groups(table, groups);
+		return false;
+    });
+});
+</script>
+
+</body>
+
+</html>
