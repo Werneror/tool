@@ -156,10 +156,12 @@ layui.use('form', function(){
 		}
 		var synonyms1 = search_synonyms(data.field.word1, distance, same_length);
 		var synonyms2 = search_synonyms(data.field.word2, distance, same_length);
-		form.val('rhyming_synonyms', {
-			'synonyms1': Array.from(synonyms1).join('\n'),
-			'synonyms2': Array.from(synonyms2).join('\n'),
-		})
+		if (synonyms1.size > 0) {
+			form.val('rhyming_synonyms', {'synonyms1': Array.from(synonyms1).join('\n')});
+		}
+		if (synonyms2.size > 0) {
+			form.val('rhyming_synonyms', {'synonyms2': Array.from(synonyms2).join('\n')});
+		}
 		return false;
     });
     form.on('submit(rhyming)', function(data){
