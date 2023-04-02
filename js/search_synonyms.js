@@ -53,11 +53,12 @@ function get_all_words(group) {
 // distance 为 2 时认为只有相同 group 的词汇是近义词
 // 依次类推。通常当 distance 大于 3 时输出数量过多，没有实际意义。
 function search_synonyms(keyword, distance=2, same_length=false) {
+	var synonyms = new Set();
+	synonyms.add(keyword);    // 一个词一定是它自己的近义词
 	if (distance == 0) {
-		return [keyword];
+		return synonyms;
 	}
 	var atomic_groups = identify_atomic_group(keyword);
-	var synonyms = new Set();
 	for (atomic_group of atomic_groups) {
 		var index = 5 - distance;
 		if (index <= 0) {
