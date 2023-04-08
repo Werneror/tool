@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="一些自写自用的简单工具">
+    <meta name="author" content="Werner">
+    <title>中文小说分析</title>
+	<link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
+    <style>
+		.site-h1{
+			margin-top: 10px;
+			margin-bottom: 20px;
+			color: #393D49;
+			font-size: 28px;
+			font-weight: 300;
+		}
+		.display {
+			width: 100%;
+			height:400px;
+		}
+    </style>
+</head>
+
+<body class="layui-bg-gray">
+
+<div class="layui-bg-gray layui-container">
+	<h1 class="site-h1">中文小说分析</h1>
+
+	<blockquote class="layui-elem-quote layui-quote-nm">对中文小说进行一些统计分析。</blockquote>
+
+    <form class="layui-form" action="" lay-filter="analyzing_chinese_novel">
+		<div class="layui-form-item">
+			<label class="layui-form-label">标题</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" placeholder="请输入小说标题" autocomplete="off" class="layui-input" required lay-verify="required">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">作者</label>
+			<div class="layui-input-block">
+				<input type="text" name="author" placeholder="请输入小说作者" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">内容</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入小说内容" name="content" rows="20" class="layui-textarea" required lay-verify="required"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">长句展示</label>
+			<div class="layui-input-block">
+				<input type="number" name="longest_n" value="3" min="1" max="100" autocomplete="off" class="layui-input" required lay-verify="required">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit lay-filter="analyzing">分析</button>
+			</div>
+		</div>
+	</form>
+
+	<div id="meta"></div>
+	<div id="sentence-group-length-distribution" class="display"></div>
+	<div id="longest-n-sentence-groups"></div>
+	<div id="sentence-group-percentage-accumulation" class="display"></div>
+</div>
+
+<script src="https://unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script src="https://unpkg.com/echarts@5.4.2/dist/echarts.min.js"></script>
+<script>
+
+// 判断一个字符是否是字符串
+function is_punctuation(c) {
+	var punctuations = "!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~！？｡＂＃＄％＆＇（）＊＋。，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏";
+	var i = punctuations.indexOf(c);
+	if (i == -1) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+// 返回输入字符串中有多少个汉字，不包括中文标点符号
+function count_chinese(str) {
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i].match(/[\u4e00-\u9fff]/)) {
+      count++;
+    }
+  }
+  return count;
+}
+
+// 输入一段文本，统计字数等元信息
+function statistics_meta(content) {
+	var meta = new Array();
+	meta.push({'key': '字数', 'value': content.replace(/\s+/g, '').length});
+	meta.push({'key': '字符数', 'value': content.length});
+	meta.push({'key': '汉字数', 'value': count_chinese(content)});
+	return meta;
+}
+
+// 把输入的字符串按标点符号和换行分割成句组
+function split_sentence_groups(s) {
+    const groups = [];
+    let group = '';
+    s.split(/\r?\n/).forEach((line) => {
+        for (let i = 0; i < line.length; i++) {
+            const c = line.charAt(i).trim();
+            if (c === '') {
+                continue;
+            }
+
+            if (!is_punctuation(c)) {
+                group += c;
+            } else {
+                if (group !== '') {
+                    groups.push(group);
+                    group = '';
+                }
+            }
+        }
+
+        if (group !== '') {
+            groups.push(group);
+            group = '';
+        }
+    });
+    return groups;
+}
+
+// 统计分析一篇小说的句组长度
+function analyze_sentence_group_length_distribution(groups) {
+	var distribution = [];
+	for (group of groups) {
+		var len = group.length;
+		if (distribution[len] == undefined) {
+			distribution[len] = 0;
+		}
+		distribution[len] += 1;
+	}
+	return distribution;
+}
+
+// 找出最长的 n 个句组
+function find_longest_n_sentence_groups(groups, n) {
+	return groups.sort((a, b) => b.length - a.length).slice(0, n);
+}
+
+function display_meta(table, title, author, data) {
+	data.unshift({'key': '作者', 'value': author});
+	data.unshift({'key': '标题', 'value': title});
+	table.render({
+		elem: '#meta',
+		data: data,
+		cols: [[
+			{field: 'key', title: '项目'},
+			{field: 'value', title: '值'},
+		]],
+	});
+}
+
+function display_sentence_group_length_distribution(title, author, data) {
+	for (var i = 0; i < data.length; i++) {
+		if (typeof data[i] === 'undefined') {
+			data[i] = 0;
+		}
+	}
+	var display_div = document.getElementById('sentence-group-length-distribution');
+	var option;
+	option = {
+		title: {
+			text: author + '《' + title + '》不同长度句子数量统计',
+			x:'center',
+			y:'top',
+		},
+		tooltip: {},
+		xAxis: {
+			type: 'category',
+			data: Object.keys(data),
+		},
+		yAxis: {
+			type: 'value',
+		},
+		series: [
+			{
+				data: data,
+				type: 'bar'
+			}
+		]
+	};
+	option && echarts.init(display_div).setOption(option);
+}
+
+function display_longest_n_sentence_groups(table, title, author, data) {
+	var sentences = [];
+	for (sentence of data) {
+		sentences.push({length: sentence.length, sentence: sentence});
+	}
+	table.render({
+		elem: '#longest-n-sentence-groups',
+		data: sentences,
+		limit: sentences.length,
+		cols: [[
+			{field: 'length', title: '长度', width: 160, sort: true},
+			{field: 'sentence', title: '句子'},
+		]],
+	});
+}
+
+function display_sentence_group_length_percentage_accumulation(title, author, data) {
+	var total = 0;
+	for (var i = 0; i < data.length; i++) {
+		if (typeof data[i] === 'undefined') {
+			data[i] = 0;
+		}
+		total += data[i];
+	}
+	var accumulation = 0;
+	for (var i = 0; i < data.length; i++) {
+		accumulation += data[i];
+		data[i] = accumulation*100.0/total;
+	}
+	var display_div = document.getElementById('sentence-group-percentage-accumulation');
+	var option;
+	option = {
+		title: {
+			text: author + '《' + title + '》不同长度句子累计占比',
+			subtext: '小于等于特定长度的句子数量占句子总数的百分比',
+			x:'center',
+			y:'top',
+		},
+		tooltip: {
+			formatter: function (params) {
+				return '<div>' + params.marker + params.name + '&nbsp;&nbsp;&nbsp;&nbsp;' + params.value.toFixed(2) + '%' + '</div>';
+			},
+		},
+		xAxis: {
+			type: 'category',
+			data: Object.keys(data),
+		},
+		yAxis: {
+			type: 'value',
+		},
+		series: [
+			{
+				data: data,
+				type: 'bar'
+			}
+		]
+	};
+	option && echarts.init(display_div).setOption(option);
+}
+
+layui.use('form', function(){
+    var form = layui.form;
+	var table = layui.table;
+    form.on('submit(analyzing)', function(data){
+		var title = data.field.title;
+		var author = data.field.author;
+		var content = data.field.content;
+		var longest_n = data.field.longest_n;
+
+		var groups = split_sentence_groups(content);
+		var meta = statistics_meta(content);
+
+		display_meta(table, title, author, meta);
+
+		var length_distribution = analyze_sentence_group_length_distribution(groups);
+		display_sentence_group_length_distribution(title, author, length_distribution);
+
+		var longest_n_sentence_groups = find_longest_n_sentence_groups(groups, longest_n);
+		display_longest_n_sentence_groups(table, title, author, longest_n_sentence_groups);
+
+		display_sentence_group_length_percentage_accumulation(title, author, length_distribution);
+
+		return false;
+    });
+});
+
+</script>
+
+</body>
+
+</html>
