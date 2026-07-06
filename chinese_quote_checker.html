@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="检查中文引号方向和闭合是否正确。">
+    <meta name="author" content="Werner">
+    <title>中文引号检查</title>
+	<link rel="stylesheet" href="https://unpkg.com/layui@2.7.6/dist/css/layui.css">
+    <style>
+		.site-h1{
+			margin-top: 10px;
+			margin-bottom: 20px;
+			color: #393D49;
+			font-size: 28px;
+			font-weight: 300;
+		}
+		.actions {
+			margin-top: 10px;
+		}
+		.result {
+			margin-top: 15px;
+			font-size: 16px;
+			line-height: 1.8;
+		}
+		.line-list {
+			color: #FF5722;
+			font-weight: bold;
+		}
+    </style>
+</head>
+
+<body class="layui-bg-gray">
+
+<div class="layui-bg-gray layui-container">
+	<h1 class="site-h1">中文引号检查</h1>
+
+	<blockquote class="layui-elem-quote layui-quote-nm">检查中文单引号和双引号是否左右用反，或是否没有闭合。假设同类引号总是先出现左引号，再出现配对的右引号。</blockquote>
+
+	<textarea id="text" rows="20" class="layui-textarea" style="font-size: 16px;" placeholder="请粘贴需要检查的纯文本"></textarea>
+
+	<div class="actions">
+		<button id="do" class="layui-btn layui-btn-primary">检查</button>
+	</div>
+
+	<div id="result" class="result"></div>
+</div>
+
+<script>
+
+var quotePairs = {
+	double: {
+		name: "双引号",
+		left: "“",
+		right: "”",
+	},
+	single: {
+		name: "单引号",
+		left: "‘",
+		right: "’",
+	},
+};
+
+function inspectChineseQuotes(text) {
+	var states = {
+		double: {
+			openLine: null,
+			openChar: "",
+		},
+		single: {
+			openLine: null,
+			openChar: "",
+		},
+	};
+	var issues = [];
+	var line = 1;
+
+	for (var i = 0; i < text.length; i++) {
+		var c = text[i];
+		if (c == "\n") {
+			line += 1;
+			continue;
+		}
+
+		for (var type in quotePairs) {
+			var pair = quotePairs[type];
+			if (c != pair.left && c != pair.right) {
+				continue;
+			}
+
+			var state = states[type];
+			var expected = state.openLine == null ? pair.left : pair.right;
+			if (c != expected) {
+				issues.push({
+					line: line,
+					type: pair.name,
+					actual: c,
+					expected: expected,
+				});
+			}
+			if (state.openLine == null) {
+				state.openLine = line;
+				state.openChar = c;
+			} else {
+				state.openLine = null;
+				state.openChar = "";
+			}
+		}
+	}
+
+	for (var type in states) {
+		if (states[type].openLine != null) {
+			issues.push({
+				line: states[type].openLine,
+				type: quotePairs[type].name,
+				actual: states[type].openChar,
+				expected: quotePairs[type].right,
+			});
+		}
+	}
+
+	return issues;
+}
+
+function uniqueIssueLines(issues) {
+	var seen = {};
+	var lines = [];
+	for (var i = 0; i < issues.length; i++) {
+		var line = issues[i].line;
+		if (!seen[line]) {
+			seen[line] = true;
+			lines.push(line);
+		}
+	}
+	lines.sort(function(a, b) {
+		return a - b;
+	});
+	return lines;
+}
+
+function displayResult(issues) {
+	var result = document.getElementById("result");
+	if (issues.length == 0) {
+		result.innerHTML = '<span class="layui-font-green">未发现中文引号错误。</span>';
+		return;
+	}
+
+	var lines = uniqueIssueLines(issues);
+	result.innerHTML = '发现中文引号错误，行号：<span class="line-list">第 ' + lines.join("、") + ' 行</span>';
+}
+
+document.getElementById("do").addEventListener("click", function(){
+	var text = document.getElementById("text").value;
+	displayResult(inspectChineseQuotes(text));
+}, false);
+
+</script>
+
+</body>
+
+</html>
